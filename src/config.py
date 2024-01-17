@@ -1,31 +1,49 @@
 import torch
 import os
 
-BATCH_SIZE = 16  # increase/ decrease according to GPU memory
-RESIZE_TD = [640, 640]  # resize the image for training and transform
-NUM_EPOCHS = 500  # number epochs to train for
+# increase/ decrease according to GPU memory - Number of samples in each batch during training.
+BATCH_SIZE = 16
+# Resize the images during training and transformation to this size.
+RESIZE_TD = [640, 640]
+NUM_EPOCHS = 500  # Number of epochs to train for.
 
-DEVICE = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+print("--- Check Device run code ---")
+DEVICE = torch.device(
+    "cuda") if torch.cuda.is_available() else torch.device("cpu")
 print("DEVICE:", DEVICE)
+print("---||---||---")
 
-ANNOTS_DIR = "./dataset/annots/label_train"
-IMAGES_DIR = "./dataset/images/pano_train"
+# Path to the directory containing annotations.
+ANNOTS_DIR = "./dataset/test_data/50_xml"
+# Path to the directory containing images.
+IMAGES_DIR = "./dataset/test_data/50_image"
+
+if not os.path.isdir(ANNOTS_DIR):
+    print(f"Label train data is not exit: {ANNOTS_DIR}")
+    exit()
+if not os.path.isdir(IMAGES_DIR):
+    print(f"Image train data is not exit: {IMAGES_DIR}")
+    exit()
+
+# Ratio for splitting the dataset into training and validation sets.
 SPLIT_RATIO = 0.3
 # classes: 0 index is reserved for background
 CLASSES = ["background", "3", "4", "5"]
 NUM_CLASSES = 4
 
-# whether to visualize images after creating the data loaders
+# Whether to visualize images after creating the data loaders.
 VISUALIZE_TRANSFORMED_IMAGES = False
 
-# location to save model and plots
+# Directory to save the model and plots
 OUT_DIR = "./outputs_model"
 
-# Type Image
+# Tuple containing allowed image file extensions.
 IMAGE_TYPE = (".jpg", ".png", ".bmp")
 
 if not os.path.isdir(OUT_DIR):
     os.makedirs(OUT_DIR)
 
-SAVE_PLOTS_EPOCH = 5  # Save loss plots after these many epochs
-SAVE_MODEL_EPOCH = 5  # Save model after these many epochs
+# Save loss plots after a certain number of epochs.
+SAVE_PLOTS_EPOCH = 5
+# Save the model after a certain number of epochs.s
+SAVE_MODEL_EPOCH = 5
