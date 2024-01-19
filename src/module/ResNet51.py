@@ -1,4 +1,3 @@
-import torch
 import torch.nn as nn
 
 # Define the building block for ResNet
@@ -32,7 +31,7 @@ class Bottleneck(nn.Module):
 # Define the ResNet-51 architecture
 class ResNet51(nn.Module):
     def __init__(self, block, num_blocks, num_classes=1000):
-        super(ResNet50, self).__init__()
+        super(ResNet51, self).__init__()
         self.in_planes = 64
         # layer51
         self.conv0 = nn.Conv2d(3, 32, kernel_size=7, stride=2, padding=3, bias=False)
@@ -67,7 +66,7 @@ class ResNet51(nn.Module):
         return out
 
 # Create an instance of ResNet-50
-resnet51 = ResNet51(Bottleneck, [3, 4, 6, 3])
+# resnet51 = ResNet51(Bottleneck, [3, 4, 6, 3])
 
 # Print the model architecture
-print(resnet51)
+# print(resnet51)
