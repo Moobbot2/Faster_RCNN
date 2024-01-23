@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torchvision.models.detection import vision_transformer
+# from module import vision_transformer
 from config import (
     CLASSES,
     RESIZE_TD,
