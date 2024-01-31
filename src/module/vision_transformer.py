@@ -22,8 +22,12 @@ class PatchEmbedding(nn.Module):
             Rearrange('b e (h) (w) -> b (h w) e'),
         )
         self.cls_token = nn.Parameter(torch.randn(1, 1, emb_size))
+        # Extract height and width from img_size tuple
+        img_height, img_width = img_size
+        print('PatchEmbedding - img_size', img_size)
+        # Use extracted dimensions for position embeddings
         self.positions = nn.Parameter(torch.randn(
-            (img_size // patch_size) ** 2 + 1, emb_size))
+            (img_height // patch_size) * (img_width // patch_size) + 1, emb_size))
 
     def forward(self, x: Tensor) -> Tensor:
         b, _, _, _ = x.shape

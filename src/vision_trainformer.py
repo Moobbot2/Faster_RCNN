@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torchvision.models.detection import vision_transformer
-# from module import vision_transformer
+# from torchvision.models.detection import vision_transformer
+from module import vision_transformer
 from config import (
     CLASSES,
     RESIZE_TD,
@@ -11,13 +11,15 @@ from datasets import train_dataset, train_loader, valid_loader
 
 # Define the Vision Transformer model
 
-
 class VisionTransformer(nn.Module):
     def __init__(self, num_classes, d_model=256, nhead=8, num_encoder_layers=6):
         super(VisionTransformer, self).__init__()
-
-        self.backbone = vision_transformer.VisionTransformer(
-            img_size=(RESIZE_TD[0], RESIZE_TD[1]),
+        # Ensure img_size contains integers for image dimensions
+        img_height, img_width = RESIZE_TD
+        print(RESIZE_TD)
+        # self.backbone = vision_transformer.VisionTransformer(
+        self.backbone = vision_transformer.ViT(
+            img_size=(img_height, img_width),
             patch_size=16,
             num_classes=num_classes,
             d_model=d_model,
